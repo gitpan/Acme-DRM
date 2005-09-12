@@ -1,0 +1,12 @@
+.cvsignore
+Changes
+lib/Acme/DRM.pm
+Makefile.PL
+MANIFEST
+META.yml			# Will be created by "make dist"
+README
+t/00-load.t
+t/doubleROT128.t
+t/pod-coverage.t
+t/pod.t
+t/secureXOR.t
