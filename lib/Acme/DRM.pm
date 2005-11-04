@@ -3,6 +3,8 @@ package Acme::DRM;
 use warnings;
 use strict;
 
+use vars qw(@ISA @EXPORT_OK $VERSION);
+
 =head1 NAME
 
 Acme::DRM - Library providing cryptographic capabilities especially suited for Digital Rights Management
@@ -13,7 +15,7 @@ Version 0.01
 
 =cut
 
-our $VERSION = '0.01';
+$VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -26,14 +28,22 @@ our $VERSION = '0.01';
  # Invoke the DMCA by encrypting your data, without invoking 
  # additional overhead for decryption at runtime
  my $protectedContent = doubleROT128($intellectualProperty);
+=cut
 
 =head1 EXPORT
+=cut
+require Exporter;
+@ISA = qw(Exporter);
 
 =over 4
 
 =item B<secureXOR>
+=cut
+push(@EXPORT_OK, '&secureXOR');
 
 =item B<doubleROT128>
+=cut
+push(@EXPORT_OK, '&doubleROT128');
 
 =back
 

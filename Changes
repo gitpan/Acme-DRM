@@ -3,3 +3,5 @@ Revision history for Acme-DRM
 0.01    12-Sep-2005
         First version, released on an unsuspecting world.
 
+0.02	04-Nov-2005
+	First bugfix -- made functions exportable! (Thanks KANE, rt ticket #15434)
