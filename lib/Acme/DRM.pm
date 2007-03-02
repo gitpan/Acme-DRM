@@ -7,15 +7,15 @@ use vars qw(@ISA @EXPORT_OK $VERSION);
 
 =head1 NAME
 
-Acme::DRM - Library providing cryptographic capabilities especially suited for Digital Rights Management
+Acme::DRM - Library providing cryptographic capabilities especially suited for Digital Rights Management. Protects against Pirates.  May increase global warming. Note: Not guaranteed to protect against Pirates or increase global warming.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.03
 
 =cut
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -28,22 +28,29 @@ $VERSION = '0.02';
  # Invoke the DMCA by encrypting your data, without invoking 
  # additional overhead for decryption at runtime
  my $protectedContent = doubleROT128($intellectualProperty);
+
 =cut
 
 =head1 EXPORT
+
 =cut
+
 require Exporter;
 @ISA = qw(Exporter);
 
 =over 4
 
 =item B<secureXOR>
+
 =cut
-push(@EXPORT_OK, '&secureXOR');
+
+push( @EXPORT_OK, '&secureXOR' );
 
 =item B<doubleROT128>
+
 =cut
-push(@EXPORT_OK, '&doubleROT128');
+
+push( @EXPORT_OK, '&doubleROT128' );
 
 =back
 
@@ -56,14 +63,13 @@ The answer is to use a variable key, however, key distribution becomes a difficu
 
 =cut
 
-sub secureXOR
-{
+sub secureXOR {
+
   # Get the first argument
   my $data = shift;
 
   # Make sure we really got something
-  unless(defined($data))
-  {
+  unless ( defined($data) ) {
     return;
   }
 
@@ -71,18 +77,18 @@ sub secureXOR
   my @output;
 
   # Break the data into individual bytes
-  my @data = unpack('C*', $data);
+  my @data = unpack( 'C*', $data );
 
   # Iterate over each byte
-  for my $byte (@data)
-  {
+  for my $byte (@data) {
+
     # Protect each byte with the secure variable-key
     # XOR algorithm
-    push(@output, $byte ^ $byte);
+    push( @output, $byte ^ $byte );
   }
 
   # Re-encode the encrypted data and output it as a single stream
-  return(pack('C*', @output));
+  return ( pack( 'C*', @output ) );
 }
 
 =head2 doubleROT128
@@ -92,14 +98,13 @@ Simply pass your digital media to this function, and it will output an encrypted
 
 =cut
 
-sub doubleROT128
-{
+sub doubleROT128 {
+
   # Get the first argument
   my $data = shift;
 
   # Make sure we got something
-  unless(defined($data))
-  {
+  unless ( defined($data) ) {
     return;
   }
 
@@ -107,29 +112,29 @@ sub doubleROT128
   my @output;
 
   # Break the input into individual bytes
-  my @data = unpack('C*', $data);
+  my @data = unpack( 'C*', $data );
 
   # Protect each byte individually, and accumulate the results
-  for my $byte (@data)
-  {
+  for my $byte (@data) {
+
     # Marvel at the beauty of this algorithm
 
     # Left shift 4 bits -- this makes the number 12 bits, lower 4 bits are all 0
     $byte = $byte << 4;
 
     # Rotate the high 4 bits back around to make this an 8-bit value again
-    $byte = ($byte / 2**8) + ($byte % 2**8);
+    $byte = ( $byte / 2**8 ) + ( $byte % 2**8 );
 
     # Now rotate it again for twice the security
     $byte = $byte << 4;
-    $byte = ($byte / 2**8) + ($byte % 2**8);
+    $byte = ( $byte / 2**8 ) + ( $byte % 2**8 );
 
     # And collect the output
-    push(@output, $byte);
+    push( @output, $byte );
   }
 
   # Re-encode the encrypted stream and output it
-  return(pack('C*', @output));
+  return ( pack( 'C*', @output ) );
 }
 
 =head1 AUTHOR
@@ -146,13 +151,17 @@ your bug as I make changes.
 
 =head1 ACKNOWLEDGEMENTS
 
+Thanks to the lobbyists behind the DMCA and the politicians who bought (or
+were bought) into the great idea of assigning corporate greed higher value
+than constitutionally-asserted citizen rights.
+
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2005 Brett T. Warden, all rights reserved.
+Copyright 2005-2007 Brett T. Warden, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
 
-1; # End of Acme::DRM
+1;    # End of Acme::DRM
